@@ -23,6 +23,36 @@ export default {};
       </div>
     </div>
   </div>
+  <div class="container my-4">
+    <div class="row">
+      <div class="col">
+        <h2>Apprtamenti in evidenza</h2>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div class="card" style="width: 18rem">
+          <img src="../assets/images/apartment/villa.Jpeg" alt="Villa" />
+          <div class="card-body">
+            <h5 class="card-title">Card title</h5>
+            <div>
+              <ul class="list-unstyled">
+                <div class="my-2">
+                  <label><strong>Metri Quadrati:</strong></label>
+                  <li class="badge mx-1">3</li>
+                </div>
+                <div class="my-2">
+                  <label><strong>Metri Quadrati:</strong></label>
+                  <li class="badge mx-1">3</li>
+                </div>
+              </ul>
+            </div>
+            <a href="#" class="btn btn-small btn-principal">Go somewhere</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 <style lang="scss">
 @use "../styles/partial/variables" as *;
@@ -77,6 +107,15 @@ export default {};
       font-size: 4rem;
       margin-bottom: 3rem;
     }
+  }
+}
+
+.card-body {
+  .badge {
+    @include badge-card;
+  }
+  .btn-principal {
+    @include btn-login;
   }
 }
 </style>

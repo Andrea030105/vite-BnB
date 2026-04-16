@@ -8,3 +8,12 @@
     background-color: $clRedHover;
   }
 }
+
+@mixin badge-card {
+  background-color: $clRed;
+  color: $clWhite;
+
+  &:hover {
+    background-color: $clRedHover;
+  }
+}
