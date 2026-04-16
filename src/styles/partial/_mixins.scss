@@ -1,0 +1,10 @@
+@use "./variables" as *;
+
+@mixin btn-login {
+  background-color: $clRed;
+  color: $clWhite;
+
+  &:hover {
+    background-color: $clRedHover;
+  }
+}

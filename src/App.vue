@@ -7,4 +7,6 @@ import AppFooter from "./components/AppFooter.vue";
   <router-view></router-view>
   <AppFooter />
 </template>
-<style lang=""></style>
+<style lang="scss">
+@use "./styles/generals.scss" as *;
+</style>

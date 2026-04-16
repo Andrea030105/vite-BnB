@@ -48,14 +48,14 @@ export default {
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item m-1">
             <a
-              class="btn btn-small btn-login"
+              class="btn btn-small btn-principal"
               href="http://127.0.0.1:8000/login"
               >Login</a
             >
           </li>
           <li class="nav-item m-1">
             <a
-              class="btn btn-small btn-login"
+              class="btn btn-small btn-principal"
               href="http://127.0.0.1:8000/register"
               >Registrati</a
             >
@@ -67,6 +67,7 @@ export default {
 </template>
 <style lang="scss">
 @use "../styles/partial/variables" as *;
+@use "../styles/partial/mixins" as *;
 .navbar-header {
   background-color: $clGray;
   color: $clBlack;
@@ -74,14 +75,8 @@ export default {
   .logo {
     width: 100px;
   }
-
-  .btn-login {
-    background-color: $clRed !important;
-    color: $clWhite !important;
-
-    &:hover {
-      background-color: $clRedHover !important;
-    }
+  .btn-principal {
+    @include btn-login;
   }
 }
 </style>
