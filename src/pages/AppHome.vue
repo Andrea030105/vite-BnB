@@ -5,15 +5,27 @@ export default {
   data() {
     return {
       apartments: [],
+      findApartmantsFilter: [],
       baseUrl: "http://127.0.0.1:8000",
+      home_search: "",
     };
   },
   methods: {
     getApartments() {
       axios.get(`${this.baseUrl}/api/apartments`).then((response) => {
-        console.log(response.data);
         this.apartments = response.data.apartments;
       });
+    },
+    getSearch() {
+      this.findApartmantsFilter = this.apartments.filter(
+        (element) =>
+          element.title
+            .toLowerCase()
+            .includes(this.home_search.toLowerCase()) ||
+          element.address
+            .toLowerCase()
+            .includes(this.home_search.toLowerCase()),
+      );
     },
   },
   mounted() {
@@ -31,12 +43,16 @@ export default {
             <h2>Trova il tuo prossimo soggiorno</h2>
             <div class="search-bar">
               <input
+                v-model="home_search"
                 type="text"
                 placeholder="Dove vuoi andare?"
-                name=""
-                id=""
+                name="home_search"
+                id="home_search"
+                @keyup.enter="getSearch()"
               />
-              <button class="btn btn-small btn-principal">Cerca</button>
+              <button class="btn btn-small btn-principal" @click="getSearch()">
+                Cerca
+              </button>
             </div>
           </div>
         </div>
@@ -44,14 +60,58 @@ export default {
     </div>
   </div>
   <div class="container my-4">
-    <div class="row">
+    <div class="row my-4">
       <div class="col">
-        <h2>Apprtamenti in evidenza</h2>
+        <h2 class="fs-1">Apprtamenti in evidenza</h2>
       </div>
     </div>
-    <div class="row">
+
+    <!-- Se non cerchi nulla ti fa vedere quelli in primo piano -->
+
+    <div class="row" v-if="findApartmantsFilter.length === 0">
       <div class="col d-flex gap-5 flex-wrap">
         <div v-for="(apartment, index) in apartments" :key="index">
+          <div class="card" style="width: 18rem">
+            <img :src="`${baseUrl}/storage/${apartment.image}`" alt="Villa" />
+            <div class="card-body">
+              <h5 class="card-title">{{ apartment.title }}</h5>
+              <ul class="list-unstyled">
+                <div class="my-2">
+                  <label><strong>Metri Quadrati:</strong></label>
+                  <li class="badge mx-1">{{ apartment.square_meters }}</li>
+                </div>
+                <div class="my-2">
+                  <label><strong>Stanze:</strong></label>
+                  <li class="badge mx-1">{{ apartment.rooms }}</li>
+                </div>
+                <div class="my-2">
+                  <label><strong>Camera/e da letto:</strong></label>
+                  <li class="badge mx-1">{{ apartment.bedrooms }}</li>
+                </div>
+                <div class="my-2">
+                  <label><strong>Bagni:</strong></label>
+                  <li class="badge mx-1">{{ apartment.bathrooms }}</li>
+                </div>
+              </ul>
+              <h5>Prezzo a notte:</h5>
+              <div>
+                <p class="badge mx-1">
+                  {{ apartment.price_per_night }}
+                  <i class="fa-solid fa-euro-sign"></i>
+                </p>
+              </div>
+              <a href="#" class="btn btn-small btn-principal">Go somewhere</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Se cerchi qualcosa -->
+
+    <div class="row">
+      <div class="col d-flex gap-5 flex-wrap">
+        <div v-for="(apartment, index) in findApartmantsFilter" :key="index">
           <div class="card" style="width: 18rem">
             <img :src="`${baseUrl}/storage/${apartment.image}`" alt="Villa" />
             <div class="card-body">
@@ -145,12 +205,20 @@ export default {
   }
 }
 
-.card-body {
-  .badge {
-    @include badge-card;
+.card {
+  img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    object-position: center;
   }
-  .btn-principal {
-    @include btn-login;
+  .card-body {
+    .badge {
+      @include badge-card;
+    }
+    .btn-principal {
+      @include btn-login;
+    }
   }
 }
 </style>
