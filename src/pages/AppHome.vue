@@ -1,23 +1,23 @@
 <script>
+import { store } from "../store";
 import axios from "axios";
 
 export default {
   data() {
     return {
-      apartments: [],
+      store,
       findApartmantsFilter: [],
-      baseUrl: "http://127.0.0.1:8000",
       home_search: "",
     };
   },
   methods: {
     getApartments() {
-      axios.get(`${this.baseUrl}/api/apartments`).then((response) => {
-        this.apartments = response.data.apartments;
+      axios.get(`${store.baseUrl}/api/apartments`).then((response) => {
+        store.apartments = response.data.apartments;
       });
     },
     getSearch() {
-      this.findApartmantsFilter = this.apartments.filter(
+      this.findApartmantsFilter = store.apartments.filter(
         (element) =>
           element.title
             .toLowerCase()
@@ -70,9 +70,12 @@ export default {
 
     <div class="row" v-if="findApartmantsFilter.length === 0">
       <div class="col d-flex gap-5 flex-wrap">
-        <div v-for="(apartment, index) in apartments" :key="index">
+        <div v-for="(apartment, index) in store.apartments" :key="index">
           <div class="card" style="width: 18rem">
-            <img :src="`${baseUrl}/storage/${apartment.image}`" alt="Villa" />
+            <img
+              :src="`${store.baseUrl}/storage/${apartment.image}`"
+              alt="Villa"
+            />
             <div class="card-body">
               <h5 class="card-title">{{ apartment.title }}</h5>
               <ul class="list-unstyled">
@@ -113,7 +116,10 @@ export default {
       <div class="col d-flex gap-5 flex-wrap">
         <div v-for="(apartment, index) in findApartmantsFilter" :key="index">
           <div class="card" style="width: 18rem">
-            <img :src="`${baseUrl}/storage/${apartment.image}`" alt="Villa" />
+            <img
+              :src="`${store.baseUrl}/storage/${apartment.image}`"
+              alt="Villa"
+            />
             <div class="card-body">
               <h5 class="card-title">{{ apartment.title }}</h5>
               <ul class="list-unstyled">
