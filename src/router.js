@@ -4,6 +4,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import AppHome from "./pages/AppHome.vue";
 import AppAdvancedSearch from "./pages/AppAdvancedSearch.vue";
 import AppApartmentDetail from "./pages/AppApartmentDetail.vue";
+import AppAllApartments from "./pages/AppAllApartments.vue";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -22,6 +23,11 @@ const router = createRouter({
       path: "/apartment_detail",
       name: "apartment_detail",
       component: AppApartmentDetail,
+    },
+    {
+      path: "/all_apartments",
+      name: "all_apartments",
+      component: AppAllApartments,
     },
   ],
 });

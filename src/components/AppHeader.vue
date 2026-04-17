@@ -40,23 +40,19 @@ export default {
             >
           </li>
           <li class="nav-item">
-            <router-link :to="{ name: 'apartment_detail' }" class="nav-link"
+            <router-link :to="{ name: 'all_apartments' }" class="nav-link"
               >Appartamenti</router-link
             >
           </li>
         </ul>
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item m-1">
-            <a
-              class="btn btn-small btn-principal"
-              href="http://127.0.0.1:8000/login"
+            <a class="btn btn-principal" href="http://127.0.0.1:8000/login"
               >Login</a
             >
           </li>
           <li class="nav-item m-1">
-            <a
-              class="btn btn-small btn-principal"
-              href="http://127.0.0.1:8000/register"
+            <a class="btn btn-principal" href="http://127.0.0.1:8000/register"
               >Registrati</a
             >
           </li>

@@ -11,11 +11,6 @@ export default {
     };
   },
   methods: {
-    getApartments() {
-      axios.get(`${store.baseUrl}/api/apartments`).then((response) => {
-        store.apartments = response.data.apartments;
-      });
-    },
     getSearch() {
       this.findApartmantsFilter = store.apartments.filter(
         (element) =>
@@ -27,9 +22,6 @@ export default {
             .includes(this.home_search.toLowerCase()),
       );
     },
-  },
-  mounted() {
-    this.getApartments();
   },
 };
 </script>
@@ -50,7 +42,7 @@ export default {
                 id="home_search"
                 @keyup.enter="getSearch()"
               />
-              <button class="btn btn-small btn-principal" @click="getSearch()">
+              <button class="btn btn-principal" @click="getSearch()">
                 Cerca
               </button>
             </div>
@@ -69,7 +61,7 @@ export default {
     <!-- Se non cerchi nulla ti fa vedere quelli in primo piano -->
 
     <div class="row" v-if="findApartmantsFilter.length === 0">
-      <div class="col d-flex gap-5 flex-wrap">
+      <div class="col d-flex gap-5 flex-wrap justify-content-center">
         <div v-for="(apartment, index) in store.apartments" :key="index">
           <div class="card" style="width: 18rem">
             <img
@@ -103,7 +95,7 @@ export default {
                   <i class="fa-solid fa-euro-sign"></i>
                 </p>
               </div>
-              <a href="#" class="btn btn-small btn-principal">Go somewhere</a>
+              <a href="#" class="btn btn-principal">Go somewhere</a>
             </div>
           </div>
         </div>
@@ -113,7 +105,7 @@ export default {
     <!-- Se cerchi qualcosa -->
 
     <div class="row">
-      <div class="col d-flex gap-5 flex-wrap">
+      <div class="col d-flex gap-5 flex-wrap justify-content-center">
         <div v-for="(apartment, index) in findApartmantsFilter" :key="index">
           <div class="card" style="width: 18rem">
             <img
@@ -147,7 +139,7 @@ export default {
                   <i class="fa-solid fa-euro-sign"></i>
                 </p>
               </div>
-              <a href="#" class="btn btn-small btn-principal">Go somewhere</a>
+              <a href="#" class="btn btn-principal">Go somewhere</a>
             </div>
           </div>
         </div>
