@@ -65,7 +65,7 @@ export default {
 @use "../styles/partial/variables" as *;
 @use "../styles/partial/mixins" as *;
 .navbar-header {
-  background-color: $clGray;
+  background-color: $clWhite;
   color: $clBlack;
   font-weight: bolder;
   .logo {
