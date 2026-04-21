@@ -57,7 +57,7 @@ export default {
         </div>
       </div>
     </div>
-    <div class="container my-4">
+    <div class="container py-4">
       <div class="row my-4">
         <div class="col">
           <h2 class="fs-1">Apprtamenti in evidenza</h2>

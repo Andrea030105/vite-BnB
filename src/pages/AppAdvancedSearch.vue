@@ -39,7 +39,9 @@ export default {
 </script>
 <template>
   <div class="bg-gray">
-    <div class="container-fluid">
+    <div
+      class="container-fluid vh-100 d-flex flex-column justify-content-center"
+    >
       <div class="row py-3">
         <div class="col">
           <h2 class="fs-1 text-center">Filtri</h2>
@@ -139,7 +141,7 @@ export default {
 
     <!-- Dopo l'applicazione dei filtri -->
 
-    <div class="container" v-if="filterApartment.length != 0">
+    <div class="container py-4" v-if="filterApartment.length != 0">
       <div class="row">
         <div class="col d-flex gap-5 flex-wrap justify-content-center">
           <div v-for="(apartment, index) in filterApartment" :key="index">
