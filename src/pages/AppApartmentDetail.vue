@@ -9,13 +9,18 @@ export default {
     return {
       store,
       apartment: [],
+      form: {
+        name: "",
+        email: "",
+        message: "",
+      },
+      success: false,
     };
   },
   mounted() {
     axios
       .get(`${store.baseUrl}/api/apartments/${this.$route.params.slug}`)
       .then((response) => {
-        console.log(response.data);
         if (response.data.success) {
           this.apartment = response.data.apartment;
         } else {
@@ -23,6 +28,39 @@ export default {
           this.$router.push({ name: "not-found" });
         }
       });
+  },
+  methods: {
+    async sendMail() {
+      try {
+        const payload = {
+          name: this.form.name,
+          email: this.form.email,
+          content: this.form.message,
+          apartment_id: this.apartment.id,
+        };
+
+        await axios.post(`${store.baseUrl}/api/send-mail`, payload, {
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+        });
+
+        this.form.name = "";
+        this.form.email = "";
+        this.form.message = "";
+        this.success = true;
+        setTimeout(() => {
+          this.success = false;
+        }, 4000);
+      } catch (error) {
+        if (error.response?.data?.errors) {
+          console.error("Errori validazione:", error.response.data.errors);
+        } else {
+          console.error("Errore:", error.message);
+        }
+      }
+    },
   },
 };
 </script>
@@ -52,10 +90,17 @@ export default {
             </div>
           </div>
           <div class="row">
-            <div class="col">
+            <div class="col my-2 d-flex align-items-center">
               <h4><strong>Servizi:</strong></h4>
-              <div class="my-2 d-flex align-items-center flex-wrap">
+              <div>
                 <span
+                  v-if="!apartment.services || apartment.services.length === 0"
+                  class="badge mx-1"
+                >
+                  Non specificato
+                </span>
+                <span
+                  v-else
                   v-for="(service, index) in apartment.services"
                   :key="index"
                   class="badge mx-1"
@@ -116,7 +161,36 @@ export default {
         </div>
       </div>
       <div class="row my-3">
-        <div class="col">
+        <div class="col-6">
+          <h4><strong>Contatta il propietario:</strong></h4>
+          <div class="card-contact d-flex flex-column p-3 bg-light">
+            <form @submit.prevent="sendMail()">
+              <label class="form-label my-3">Nome</label>
+              <input
+                v-model="form.name"
+                type="text"
+                placeholder="Nome"
+                class="form-control"
+              />
+              <label class="form-label my-3">Email</label>
+              <input
+                v-model="form.email"
+                type="email"
+                placeholder="Email"
+                class="form-control"
+              />
+              <label class="form-label my-3">Messaggio</label>
+              <textarea
+                v-model="form.message"
+                placeholder="Messaggio"
+                class="form-control"
+              ></textarea>
+              <button class="mt-4 btn btn-message">Invia</button>
+              <p v-if="success">✅ Messaggio inviato!</p>
+            </form>
+          </div>
+        </div>
+        <div class="col-6">
           <h4><strong>Dove ti troverai:</strong></h4>
           <div class="map">
             <AppMap
@@ -156,6 +230,14 @@ export default {
   }
   .map {
     border: 2px solid black;
+  }
+
+  .card-contact {
+    border-radius: 10px;
+    border: 2px solid black;
+    .btn-message {
+      @include btn-login;
+    }
   }
 }
 </style>

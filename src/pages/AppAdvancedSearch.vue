@@ -153,7 +153,7 @@ export default {
 <style lang="scss">
 @use "../styles/partial/mixins" as *;
 @use "../styles/partial/variables" as *;
-.bg-gary {
+.bg-gray {
   background-color: $clGray;
   .btn-principal {
     @include btn-login;
