@@ -23,6 +23,9 @@ export default {
       .then((response) => {
         if (response.data.success) {
           this.apartment = response.data.apartment;
+          axios.post(
+            `${store.baseUrl}/api/apartments/${this.apartment.id}/views`,
+          );
         } else {
           // redirect alla pagina 404
           this.$router.push({ name: "not-found" });
