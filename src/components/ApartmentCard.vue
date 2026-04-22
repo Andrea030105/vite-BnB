@@ -65,8 +65,9 @@ export default {
     transform: translateY(-4px);
   }
   img {
-    height: 220px;
+    height: 200px;
     object-fit: cover;
+    object-position: center;
   }
   .badge-gray {
     @include badge-card-gray;

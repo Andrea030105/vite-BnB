@@ -1,7 +1,6 @@
 <script>
 import ApartmentCard from "../components/ApartmentCard.vue";
 import { store } from "../store";
-import axios from "axios";
 
 export default {
   components: { ApartmentCard },
@@ -10,10 +9,22 @@ export default {
       store,
       findApartmantsFilter: [],
       home_search: "",
+      noResultsMessage: "",
+      hasSearched: false,
     };
   },
   methods: {
     getSearch() {
+      this.noResultsMessage = "";
+
+      if (!this.home_search.trim()) {
+        this.findApartmantsFilter = [];
+        this.hasSearched = false;
+        return;
+      }
+
+      this.hasSearched = true;
+
       this.findApartmantsFilter = store.apartments.filter(
         (element) =>
           element.title
@@ -23,10 +34,15 @@ export default {
             .toLowerCase()
             .includes(this.home_search.toLowerCase()),
       );
+
+      if (this.findApartmantsFilter.length === 0) {
+        this.noResultsMessage = "Nessun appartamento trovato";
+      }
     },
   },
 };
 </script>
+
 <template>
   <div class="container-jumbotron text-center">
     <img src="../assets/images/jumbotron/jumbotron.png" alt="jumbotron" />
@@ -45,30 +61,41 @@ export default {
       </div>
     </div>
   </div>
+
   <div class="bg-gray d-flex align-items-center">
     <div class="container">
       <div class="row py-4">
         <div class="col text-center text-capitalize">
-          <h2 class="fs-1">Appartamenti in evidenza</h2>
+          <h2
+            class="fs-1"
+            v-if="hasSearched == false && noResultsMessage == ''"
+          >
+            Appartamenti Sponsorizzati
+          </h2>
         </div>
       </div>
 
-      <!-- Se non cerchi nulla ti fa vedere quelli in primo piano -->
-
-      <div class="row" v-if="findApartmantsFilter.length === 0">
+      <!-- CASO 1: nessuna ricerca → mostra sponsorizzati -->
+      <div class="row" v-if="!hasSearched">
         <div class="col d-flex gap-5 flex-wrap justify-content-center">
           <div v-for="(apartment, index) in store.apartments" :key="index">
             <ApartmentCard
               :apartment="apartment"
-              v-if="apartment.sponsors.length != 0"
+              v-if="apartment.sponsors.length !== 0"
             />
           </div>
         </div>
       </div>
 
-      <!-- Se cerchi qualcosa -->
+      <!-- CASO 2: ha cercato ma non trova nulla -->
+      <div class="row" v-else-if="hasSearched && noResultsMessage">
+        <div class="col text-center text-danger fs-2 py-4">
+          <i class="fa-solid fa-x"></i> {{ noResultsMessage }}
+        </div>
+      </div>
 
-      <div class="row">
+      <!-- CASO 3: ha cercato e trova risultati -->
+      <div class="row" v-else>
         <div class="col d-flex gap-5 flex-wrap justify-content-center">
           <div v-for="(apartment, index) in findApartmantsFilter" :key="index">
             <ApartmentCard :apartment="apartment" />
@@ -78,9 +105,11 @@ export default {
     </div>
   </div>
 </template>
+
 <style lang="scss" scoped>
 @use "../styles/partial/variables" as *;
 @use "../styles/partial/mixins" as *;
+
 .container-jumbotron {
   height: calc(100vh - 100px);
   width: 100%;
@@ -108,6 +137,7 @@ export default {
     transform: translate(50%, -50%);
     z-index: 1;
     width: 60%;
+
     .search-bar {
       background-color: $clGray;
       border-radius: 20px;
@@ -116,16 +146,19 @@ export default {
       justify-content: space-between;
       align-items: center;
       height: 80px;
+
       input {
         width: 100%;
         border: none;
         padding: 10px;
         margin-right: 1rem;
         background-color: $clGray;
+
         &:focus-visible {
           outline: none;
         }
       }
+
       .btn-principal {
         width: 120px;
         height: 50px;
@@ -133,6 +166,7 @@ export default {
         @include btn-login;
       }
     }
+
     h2 {
       font-size: 4rem;
       margin-bottom: 3rem;
@@ -142,6 +176,7 @@ export default {
     }
   }
 }
+
 .bg-gray {
   height: calc(100vh - 100px);
 }
