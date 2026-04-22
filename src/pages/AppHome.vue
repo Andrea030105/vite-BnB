@@ -62,7 +62,7 @@ export default {
     </div>
   </div>
 
-  <div class="bg-gray d-flex align-items-center">
+  <div class="bg-gray py-4 d-flex align-items-center">
     <div class="container">
       <div class="row py-4">
         <div class="col text-center text-capitalize">
@@ -78,12 +78,12 @@ export default {
       <!-- CASO 1: nessuna ricerca → mostra sponsorizzati -->
       <div class="row" v-if="!hasSearched">
         <div class="col d-flex gap-5 flex-wrap justify-content-center">
-          <div v-for="(apartment, index) in store.apartments" :key="index">
+          <template v-for="(apartment, index) in store.apartments" :key="index">
             <ApartmentCard
               :apartment="apartment"
-              v-if="apartment.sponsors.length !== 0"
+              v-if="apartment.sponsors.length != 0"
             />
-          </div>
+          </template>
         </div>
       </div>
 
@@ -178,6 +178,6 @@ export default {
 }
 
 .bg-gray {
-  height: calc(100vh - 100px);
+  height: 100%;
 }
 </style>

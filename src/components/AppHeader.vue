@@ -5,9 +5,9 @@ export default {
   },
 };
 </script>
-<template lang="">
+<template>
   <nav class="navbar navbar-expand-lg navbar-header">
-    <div class="container-fluid text-center">
+    <div class="container-fluid container-nav text-center">
       <router-link class="navbar-brand logo" :to="{ name: 'home' }">
         <img src="../assets/images/loghi/Logo_Completo.svg" alt="Logo" />
       </router-link>
@@ -45,6 +45,9 @@ export default {
             >
           </li>
         </ul>
+
+        <!-- in caso non si è loggati -->
+
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item m-1">
             <a class="btn btn-principal" href="http://127.0.0.1:8000/login"
@@ -57,6 +60,8 @@ export default {
             >
           </li>
         </ul>
+
+        <!-- nel caso si è già loggati -->
       </div>
     </div>
   </nav>
@@ -64,6 +69,10 @@ export default {
 <style lang="scss">
 @use "../styles/partial/variables" as *;
 @use "../styles/partial/mixins" as *;
+.container-nav {
+  background-color: #f7f7f7;
+  z-index: 2;
+}
 .navbar-header {
   background-color: $clWhite;
   color: $clBlack;
@@ -72,7 +81,7 @@ export default {
   .nav-link {
     margin: 0 1rem;
     &.router-link-exact-active {
-      color: $clRed !important; // ✅ colore attivo
+      color: $clRed !important;
       font-weight: 600;
       border-bottom: 2px solid $clRed;
     }
