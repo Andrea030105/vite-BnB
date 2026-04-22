@@ -68,8 +68,17 @@ export default {
   background-color: $clWhite;
   color: $clBlack;
   font-weight: bolder;
+  height: 100px;
+  .nav-link {
+    margin: 0 1rem;
+    &.router-link-exact-active {
+      color: $clRed !important; // ✅ colore attivo
+      font-weight: 600;
+      border-bottom: 2px solid $clRed;
+    }
+  }
   .logo {
-    width: 100px;
+    width: 150px;
   }
   .btn-principal {
     @include btn-login;

@@ -13,14 +13,14 @@ export default {
     <div class="container py-4">
       <div class="row align-items-center gy-3">
         <!-- Logo + copyright -->
-        <div class="col-12 col-md-4 text-center text-md-start">
-          <span class="footer-logo">
-            <img
-              src="../assets/images/loghi/Logo_Completo.svg"
-              alt="Logo"
-              class="w-50"
-            />
-          </span>
+        <div
+          class="col-12 col-md-4 d-flex align-items-center justify-content-center flex-column"
+        >
+          <img
+            src="../assets/images/loghi/Logo_Completo.svg"
+            alt="Logo"
+            class="w-50"
+          />
           <p class="footer-copy mt-1">
             © {{ currentYear }} BnB. Tutti i diritti riservati.
           </p>

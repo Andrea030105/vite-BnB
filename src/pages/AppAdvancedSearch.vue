@@ -38,18 +38,18 @@ export default {
 };
 </script>
 <template>
-  <div class="bg-gray">
-    <div
-      class="container-fluid vh-100 d-flex flex-column justify-content-center"
-    >
-      <div class="row py-3">
-        <div class="col">
-          <h2 class="fs-1 text-center">Filtri</h2>
-        </div>
-      </div>
+  <div class="bg-gray py-4">
+    <div class="container-fluid py-4">
       <div class="row">
-        <div class="col">
-          <div class="filter-container mx-5 my-4">
+        <!-- SIDEBAR FILTRI -->
+        <div class="col-12 col-lg-3">
+          <div
+            @keyup.enter="getApartmentFilter()"
+            class="card p-3 sticky-top"
+            style="top: 20px"
+          >
+            <h5 class="mb-3">Filtri</h5>
+
             <div class="input-group mb-3">
               <span class="input-group-text" id="basic-addon1">
                 <i class="fa-solid fa-location-dot"></i>
@@ -106,7 +106,7 @@ export default {
               />
             </div>
             <div class="d-flex justify-content-center">
-              <div class="input-group mb-3 flex-nowrap w-50">
+              <div class="input-group mb-3 flex-nowrap">
                 <span class="input-group-text" id="basic-addon1">
                   <i class="fa-solid fa-euro-sign"></i>
                 </span>
@@ -128,7 +128,7 @@ export default {
             </div>
             <div class="d-flex justify-content-center">
               <button
-                class="btn btn-principal w-25"
+                class="btn btn-principal w-100"
                 @click="getApartmentFilter()"
               >
                 Applica Filtri
@@ -136,16 +136,21 @@ export default {
             </div>
           </div>
         </div>
-      </div>
-    </div>
 
-    <!-- Dopo l'applicazione dei filtri -->
-
-    <div class="container py-4" v-if="filterApartment.length != 0">
-      <div class="row">
-        <div class="col d-flex gap-5 flex-wrap justify-content-center">
-          <div v-for="(apartment, index) in filterApartment" :key="index">
-            <ApartmentCard :apartment="apartment" />
+        <!-- RISULTATI FILTRATI -->
+        <div class="col-12 col-lg-9" v-if="filterApartment.length != 0">
+          <div class="row row-cols-1 row-cols-md-2 row-cols-xl-4 g-4">
+            <div v-for="(apartment, index) in filterApartment" :key="index">
+              <ApartmentCard :apartment="apartment" />
+            </div>
+          </div>
+        </div>
+        <!-- RISULTATI NON FILTRATI -->
+        <div class="col-12 col-lg-9" v-else>
+          <div class="row row-cols-1 row-cols-md-2 row-cols-xl-4 g-4">
+            <div v-for="(apartment, index) in store.apartments" :key="index">
+              <ApartmentCard :apartment="apartment" />
+            </div>
           </div>
         </div>
       </div>
@@ -157,6 +162,10 @@ export default {
 @use "../styles/partial/variables" as *;
 .bg-gray {
   background-color: $clGray;
+  height: calc(100vh - 100px);
+  .vh-filter {
+    height: calc(100vh - 100px);
+  }
   .btn-principal {
     @include btn-login;
   }
