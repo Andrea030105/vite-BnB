@@ -70,20 +70,20 @@ export default {
 <template>
   <div class="bg-gray">
     <div class="container py-4">
-      <div class="row">
+      <div class="row mt-7">
         <div class="col text-center">
           <h2 class="fs-1 my-3 ms-3 text-capitalize">{{ apartment.title }}</h2>
         </div>
       </div>
       <div class="row">
-        <div class="col-6 d-flex align-items-center">
+        <div class="col-12 col-lg-6 d-flex align-items-center">
           <img
             :src="`${store.baseUrl}/storage/${apartment.image}`"
             alt="img-apartmnet"
             class="img-detail"
           />
         </div>
-        <div class="col-6 py-3">
+        <div class="col-12 col-lg-6 py-3">
           <div class="row">
             <div class="col">
               <p>
@@ -114,7 +114,9 @@ export default {
           </div>
           <div class="row my-3">
             <div class="col">
-              <div class="d-flex justify-content-between align-items-center">
+              <div
+                class="d-flex justify-content-between align-items-center flex-wrap"
+              >
                 <h4><strong>Info:</strong></h4>
                 <div
                   class="badge badge-red d-flex justify-content-around align-items-center"
@@ -163,7 +165,7 @@ export default {
         </div>
       </div>
       <div class="row my-3">
-        <div class="col-6">
+        <div class="col-12 col-lg-6">
           <h4><strong>Contatta il propietario:</strong></h4>
           <div class="card-contact d-flex flex-column p-3 bg-light">
             <form @submit.prevent="sendMail()">
@@ -187,12 +189,14 @@ export default {
                 placeholder="Messaggio"
                 class="form-control"
               ></textarea>
-              <button class="mt-4 btn btn-message">Invia</button>
-              <p v-if="success">✅ Messaggio inviato!</p>
+              <button class="mt-4 btn btn-message w-100">Invia</button>
+              <p v-if="success" class="text-danger text-center">
+                Messaggio inviato!
+              </p>
             </form>
           </div>
         </div>
-        <div class="col-6">
+        <div class="col-12 col-lg-6 mt-5 m-lg-0">
           <h4><strong>Dove ti troverai:</strong></h4>
           <div class="map">
             <AppMap

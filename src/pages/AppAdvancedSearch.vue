@@ -41,13 +41,13 @@ export default {
 </script>
 <template>
   <div class="bg-gray py-4">
-    <div class="container-fluid py-4">
+    <div class="container-fluid mt-7">
       <div class="row">
         <!-- SIDEBAR FILTRI -->
-        <div class="col-12 col-lg-3">
+        <div class="col-12 col-xl-3">
           <div
             @keyup.enter="getApartmentFilter()"
-            class="card p-3 sticky-top"
+            class="card p-3 z-0"
             style="top: 20px"
           >
             <h5 class="mb-3">Filtri</h5>
@@ -81,7 +81,7 @@ export default {
                 min="1"
                 type="number"
                 class="form-control"
-                placeholder="Camere da letto"
+                placeholder="Letti"
                 v-model="bedrooms"
               />
             </div>
@@ -103,7 +103,7 @@ export default {
                 min="30"
                 type="number"
                 class="form-control"
-                placeholder="Metri Quadrati"
+                placeholder="Mq"
                 v-model="squareMeters"
               />
             </div>
@@ -140,11 +140,12 @@ export default {
         </div>
 
         <!-- RISULTATI FILTRATI -->
-        <div class="col-12 col-lg-9" v-if="filterApartment.length != 0">
-          <div class="row row-cols-1 row-cols-md-2 row-cols-xl-4 g-4">
-            <div v-for="(apartment, index) in filterApartment" :key="index">
-              <ApartmentCard :apartment="apartment" />
-            </div>
+        <div
+          class="col col d-flex gap-5 flex-wrap justify-content-center m-5 m-xl-4"
+          v-if="filterApartment.length != 0"
+        >
+          <div v-for="(apartment, index) in filterApartment" :key="index">
+            <ApartmentCard :apartment="apartment" />
           </div>
         </div>
 
@@ -158,11 +159,12 @@ export default {
         </div>
 
         <!-- RISULTATI NON FILTRATI -->
-        <div class="col-12 col-lg-9" v-else>
-          <div class="row row-cols-1 row-cols-md-2 row-cols-xl-4 g-4">
-            <div v-for="(apartment, index) in store.apartments" :key="index">
-              <ApartmentCard :apartment="apartment" />
-            </div>
+        <div
+          class="col col d-flex gap-5 flex-wrap justify-content-center m-5 m-xl-4"
+          v-else
+        >
+          <div v-for="(apartment, index) in store.apartments" :key="index">
+            <ApartmentCard :apartment="apartment" />
           </div>
         </div>
       </div>
@@ -175,6 +177,7 @@ export default {
 .bg-gray {
   background-color: $clGray;
   height: calc(100vh - 100px);
+
   .vh-filter {
     height: calc(100vh - 100px);
   }

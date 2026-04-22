@@ -16,7 +16,7 @@ export default {
 </script>
 <template>
   <div class="bg-gray py-5">
-    <div class="container py-4">
+    <div class="container mt-5">
       <div class="row">
         <div class="col">
           <div class="text-center my-5">
